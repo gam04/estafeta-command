@@ -1,0 +1,74 @@
+{
+    "name": "gam/estafeta-command",
+    "description": "PHP library to run 'estafeta interactive command' web portal operations programmatically.",
+    "license": "Apache-2.0",
+    "type": "library",
+    "keywords": [
+        "estafeta",
+        "comando",
+        "guias"
+    ],
+    "authors": [
+        {
+            "name": "Jose Antonio",
+            "email": "antgam95@gmail.com",
+            "homepage": "https://gamboa-gam.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "ext-json": "*",
+        "myclabs/php-enum": "^1.8",
+        "symfony/browser-kit": "^5.4",
+        "symfony/http-client": "^5.4",
+        "symfony/mime": "^5.4"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "phpstan/phpstan": "^1.5",
+        "phpunit/phpunit": "^9.5",
+        "roave/security-advisories": "dev-master",
+        "timeweb/phpstan-enum": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gam\\Estafeta\\Command\\": "src/main"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Gam\\Estafeta\\Command\\Test\\": "src/test"
+        }
+    },
+    "scripts": {
+        "dev:all": [
+            "@dev:code-style",
+            "@dev:analyse",
+            "@dev:test",
+            "@dev:security"
+        ],
+        "dev:code": [
+            "@dev:code-style",
+            "@dev:analyse",
+
+            "@dev:security"
+        ],
+        "dev:analyse": "vendor/bin/phpstan analyse --ansi --no-progress",
+        "dev:code-style": "vendor/bin/php-cs-fixer fix --ansi --dry-run --diff",
+        "dev:fix-style": "vendor/bin/php-cs-fixer fix --verbose",
+        "dev:security": "@composer update --no-suggest --no-interaction --dry-run roave/security-advisories",
+        "dev:test": "vendor/bin/phpunit --colors=always"
+    },
+    "scripts-descriptions": {
+        "dev:code": "Perform checks at once: code-style, static code analysis & security.",
+        "dev:all": "Perform all the checks at once: code-style, static code analysis, unit tests and security.",
+        "dev:analyse": "Static code analysis via PHPStan",
+        "dev:code-style": "Check the code style.",
+        "dev:fix-style": "Fix the code style.",
+        "dev:security": "Manual dependencies security check via roave/security-advisories.",
+        "dev:test": "Run all unit tests."
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

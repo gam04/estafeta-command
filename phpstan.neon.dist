@@ -1,0 +1,9 @@
+includes:
+    - vendor/timeweb/phpstan-enum/extension.neon
+
+parameters:
+    tmpDir: build/cache/phpstan
+    level: 6
+    paths:
+        - src/main
+        - src/test
