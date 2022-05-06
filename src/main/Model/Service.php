@@ -8,6 +8,10 @@ class Service
 
     public const LAND_PAID = 'Terrestre Prepagado sin crédito';
 
+    public const CREDIT_NEXT_DAY = 'Dia siguiente Prepagado';
+
+    public const CREDIT_LAND_PAID = 'Terrestre Prepagado';
+
     private string $name;
 
     private string $id;

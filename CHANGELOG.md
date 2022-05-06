@@ -24,3 +24,10 @@ Changelog
 
 ### BREAKING CHANGES
 - Initial Release
+
+
+1.0.1
+-----
+
+### Added:
+- New services constants: `CREDIT_NEXT_DAY` & `CREDIT_LAND_PAID`
