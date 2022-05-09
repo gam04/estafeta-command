@@ -38,4 +38,28 @@ class SectionListTest extends \PHPUnit\Framework\TestCase
         self::assertCount(1, $this->sections->findBySuburb('Redacted Crom'));
         self::assertCount(1, $this->sections->findBySuburb('RedactEd', true));
     }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function firstElementReturnNullOnEmptyList(): void
+    {
+        $emptyList = new SectionList();
+        self::assertNull($emptyList->first());
+        $result = $this->sections->findBySuburb('DOES NOT EXIST');
+        self::assertNull($result->first());
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function lastElementReturnNullOnEmptyList(): void
+    {
+        $emptyList = new SectionList();
+        self::assertNull($emptyList->last());
+        $result = $this->sections->findBySuburb('DOES NOT EXIST');
+        self::assertNull($result->last());
+    }
 }

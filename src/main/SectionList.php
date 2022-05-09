@@ -82,14 +82,16 @@ class SectionList implements \Countable
         return $this->sections;
     }
 
-    public function first(): LocationSection
+    public function first(): ?LocationSection
     {
-        return reset($this->sections);
+        $first = reset($this->sections);
+        return false === $first? null : $first;
     }
 
-    public function last(): LocationSection
+    public function last(): ?LocationSection
     {
-        return end($this->sections);
+        $last = end($this->sections);
+        return false === $last? null : $last;
     }
 
     public function isEmpty(): bool

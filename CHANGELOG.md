@@ -31,3 +31,10 @@ Changelog
 
 ### Added:
 - New services constants: `CREDIT_NEXT_DAY` & `CREDIT_LAND_PAID`
+
+
+1.0.2
+-----
+
+### Fixed:
+- `first()` & `last()` methods could return `null` on `SectionList`
