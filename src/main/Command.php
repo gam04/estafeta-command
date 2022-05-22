@@ -269,7 +269,7 @@ class Command
         $parsed = json_decode($content, true);
 
         if (! isset($parsed['objectResponse'])) {
-            $error = $parsed['failure'][0] ?? '';
+            $error = $parsed['failure'] ?? [];
             throw new CommandException('Unable to get object response', $error);
         }
 

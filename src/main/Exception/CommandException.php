@@ -7,26 +7,36 @@ use Throwable;
 class CommandException extends \Exception
 {
     /**
-     * @var array<string, mixed>
+     * @var array<int, mixed>
      */
     private array $errorData;
 
-    public function __construct(string $message = '', string $jsonError = '{}', int $code = 0, Throwable $previous = null)
-    {
+    /**
+     * @param string $message
+     * @param array<int, mixed> $errorData
+     * @param int $code
+     * @param Throwable|null $previous
+     */
+    public function __construct(
+        string $message = '',
+        array $errorData = [],
+        int $code = 0,
+        Throwable $previous = null
+    ) {
         parent::__construct($message, $code, $previous);
-
-        try {
-            $this->errorData = json_decode($jsonError, true, 512, JSON_THROW_ON_ERROR);
-        } catch (\JsonException $e) {
-            $this->errorData = [];
-        }
+        $this->errorData = $errorData;
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array<int, mixed>
      */
     public function getErrorData(): array
     {
         return $this->errorData;
+    }
+
+    public function getFirstError(): string
+    {
+        return $this->errorData[0] ?? '';
     }
 }
