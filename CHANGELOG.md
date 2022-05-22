@@ -38,3 +38,11 @@ Changelog
 
 ### Fixed:
 - `first()` & `last()` methods could return `null` on `SectionList`
+
+
+1.0.3
+-----
+
+### Fixed:
+- Fix `errorData` in `CommandException`.
+- Add `firstError` method to obtain the first error message on `CommandException`
