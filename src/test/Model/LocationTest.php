@@ -26,8 +26,8 @@ class LocationTest extends TestCase
             'REDACTED',
             'REDACTED',
             new Rfc('LEGAL REDACTED'),
-            '',
-            new ContactPhone('', '6623291184'),
+            null,
+            new ContactPhone(mobileNumber: '6623291184'),
         );
         $originSection = new LocationSection(
             '83177',

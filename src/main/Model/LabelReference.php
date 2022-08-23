@@ -1,8 +1,14 @@
 <?php
 
+/** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
+
 namespace Gam\Estafeta\Command\Model;
 
-class LabelReference
+use Gam\Estafeta\Command\Validation\Rules;
+use Gam\Estafeta\Command\Validation\ValidatedModel;
+use Nette\Schema\Expect;
+
+class LabelReference extends ValidatedModel
 {
     private string $contentDescription;
 
@@ -17,9 +23,10 @@ class LabelReference
      */
     public function __construct(string $contentDescription, string $reference, string $description)
     {
-        $this->contentDescription = $contentDescription;
-        $this->reference = $reference;
-        $this->description = $description;
+        parent::__construct(compact(['contentDescription', 'reference', 'description']));
+        $this->contentDescription = $this->normalized->contentDescription;
+        $this->reference = $this->normalized->reference;
+        $this->description = $this->normalized->description;
     }
 
     /**
@@ -44,5 +51,26 @@ class LabelReference
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    protected function validationRules(): array
+    {
+        return [
+            'contentDescription' => Expect::string()->min(1)->max(100)
+                ->assert(...Rules::alphanumeric()),
+            'reference' => Expect::string()->min(2)->max(25)
+                ->assert(...Rules::validDescription()),
+            'description' => Expect::string()->min(1)->max(100)
+                ->assert(...Rules::alphanumeric()),
+        ];
+    }
+
+    protected function prepareData(): array
+    {
+        return [
+            'contentDescription' => [\Gam\Estafeta\Command\Validation\Cleaner::class, 'ofAlphanumeric'],
+            'reference' => [\Gam\Estafeta\Command\Validation\Cleaner::class, 'ofValidDescription'],
+            'description' => [\Gam\Estafeta\Command\Validation\Cleaner::class, 'ofAlphanumeric'],
+        ];
     }
 }

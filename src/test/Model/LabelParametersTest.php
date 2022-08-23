@@ -33,7 +33,7 @@ class LabelParametersTest extends \PHPUnit\Framework\TestCase
             new Account('5895301-GRUPO SODB SA DE CV', '5895301'),
             $this->newOrigin(),
             $this->newDestination(),
-            new Package(2.0, new Dimension(0, 0, 0)),
+            new Package(2.0, new Dimension(100, 50, 50)),
             new Service(Service::NEXT_DAY, '62|1|NOR'),
             new ContentType('111619', 'CAJA'),
             PackagingType::ENVELOPE(),
@@ -55,8 +55,8 @@ class LabelParametersTest extends \PHPUnit\Framework\TestCase
             'redacted',
             'REdACTED',
             new Rfc('REDÁCTED'),
-            '',
-            new ContactPhone('', '6623291184'),
+            null,
+            new ContactPhone(null, '6623291184'),
         );
         $originSection = new LocationSection(
             '83177',
@@ -83,8 +83,8 @@ class LabelParametersTest extends \PHPUnit\Framework\TestCase
             'REDACTED',
             'REDACTED',
             new Rfc('REDACTED'),
-            '',
-            new ContactPhone('', '6672179828'),
+            null,
+            new ContactPhone(null, '6672179828'),
         );
         $section = new LocationSection(
             '80308',

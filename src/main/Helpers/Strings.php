@@ -44,4 +44,15 @@ final class Strings
             htmlentities($content, ENT_QUOTES, 'UTF-8')
         );
     }
+
+    /**
+     * @param string $content
+     * @param string[]|string $search
+     * @param string[]|string $replace
+     * @return string
+     */
+    public static function replace(string $content, $search, $replace): string
+    {
+        return str_replace($search, $replace, $content);
+    }
 }

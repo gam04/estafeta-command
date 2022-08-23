@@ -1,10 +1,15 @@
 <?php
 
+/** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
+
 namespace Gam\Estafeta\Command\Model;
 
 use Gam\Estafeta\Command\Helpers\NormalizeInput;
+use Gam\Estafeta\Command\Validation\Rules;
+use Gam\Estafeta\Command\Validation\ValidatedModel;
+use Nette\Schema\Expect;
 
-class Contact
+class Contact extends ValidatedModel
 {
     use NormalizeInput;
 
@@ -20,7 +25,7 @@ class Contact
 
     private string $contactName;
 
-    private string $email;
+    private ?string $email;
 
     private Rfc $rfc;
 
@@ -28,20 +33,21 @@ class Contact
      * @param string $shortName
      * @param string $contactName
      * @param Rfc $rfc
-     * @param string $email
+     * @param string|null $email
      * @param ContactPhone|null $phone
      */
     public function __construct(
         string $shortName,
         string $contactName,
         Rfc $rfc,
-        string $email = '',
-        ContactPhone $phone = null
+        ?string $email = null,
+        ?ContactPhone $phone = null
     ) {
+        parent::__construct(compact(['shortName', 'contactName', 'email']));
         $this->phone = $phone;
-        $this->shortName = $shortName;
-        $this->contactName = $contactName;
-        $this->email = $email;
+        $this->shortName = $this->normalized->shortName;
+        $this->contactName = $this->normalized->contactName;
+        $this->email = $this->normalized->email;
         $this->rfc = $rfc;
     }
 
@@ -84,9 +90,9 @@ class Contact
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -97,5 +103,28 @@ class Contact
     public function getRfc(): Rfc
     {
         return $this->rfc;
+    }
+
+    protected function validationRules(): array
+    {
+        return [
+            'shortName' => Expect::string()->required()
+                ->min(2)->max(50)
+                ->assert(...Rules::validDescription()),
+
+            'contactName' => Expect::string()->required()
+                ->min(2)->max(30)
+                ->assert(...Rules::validDescription()),
+
+            'email' => Expect::email()->nullable(),
+        ];
+    }
+
+    protected function prepareData(): array
+    {
+        return [
+            'shortName' => [\Gam\Estafeta\Command\Validation\Cleaner::class, 'ofValidDescription'],
+            'contactName' => [\Gam\Estafeta\Command\Validation\Cleaner::class, 'ofValidDescription'],
+        ];
     }
 }

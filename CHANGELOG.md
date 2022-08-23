@@ -46,3 +46,14 @@ Changelog
 ### Fixed:
 - Fix `errorData` in `CommandException`.
 - Add `firstError` method to obtain the first error message on `CommandException`
+
+1.2.0
+-----
+
+### Added:
+- Model Validation & Model cleaner. 
+  - Some Models has built-in validation rules.
+  - Some special characters are removed.
+- If a `ValidatedModel` is invalid an `InvalidDataException` is thrown.
+- Nullable values indead of empty string values.
+- New tests.

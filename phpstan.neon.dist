@@ -7,3 +7,7 @@ parameters:
     paths:
         - src/main
         - src/test
+    ignoreErrors:
+           -
+             message: '#Constructor of class [a-zA-Z0-9_\\]+ has an unused parameter \$[a-zA-Z0-9_]+.#'
+             path: src/main/Model/*

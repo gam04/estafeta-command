@@ -54,7 +54,7 @@ $originContact = new Contact(
     'Bar',
     new Rfc('Foo Company'),
     'foo@bar.com',
-    new ContactPhone('', '00000000')
+    new ContactPhone('0000000000', '0000000000')
 );
 // 6. Create the Origin
 $origin = new Location(
@@ -116,7 +116,58 @@ file_put_contents("{$label->getId()}.pdf", $label->getPdf());
 $command->logout();
 ```
 
+### Model Validation & Cleaner
+The package has built-in validation according to official web portal rules. The following models are validated 
+in the constructor because their attributes cannot be modified after object construction.
+ - Address
+ - Contact
+ - ContactPhone
+ - Dimension
+ - LabelReference
+ - Package
+ - Reference
+ - Rfc
 
+The following models have buil-in cleaner (data sanitization) to remove not allowed characters:
+#### Address
+- `firstStreet`: Diferent characters of `[a-z ÁÉÍÓÚáéíóú\d.,;:#*^\/]` are removed.
+- `streetAddress`: Diferent characters of `[^a-zÁÉÍÓÚáéíóú \d_]` are removed.
+- `apartmentNumber`: Diferent characters of `[a-z ÁÉÍÓÚáéíóú\d.,;:#*^\/]` are removed.
+- `secondStreet`: Diferent characters of `[^a-zÁÉÍÓÚáéíóú \d_]` are removed.
+
+#### Contact
+- `shortName`: Diferent characters of `[a-z ÁÉÍÓÚáéíóú\d.,;:#*^\/]` are removed.
+- `contactName`: Diferent characters of `[a-z ÁÉÍÓÚáéíóú\d.,;:#*^\/]` are removed.
+
+#### LabelReference
+- `contentDescription`: Diferent characters of `[^a-zÁÉÍÓÚáéíóú \d_]` are removed.
+- `reference`: Diferent characters of `[a-z ÁÉÍÓÚáéíóú\d.,;:#*^\/]` are removed.
+- `description`: Diferent characters of `[a-zÁÉÍÓÚáéíóú \d_]` are removed.
+
+
+#### Package
+- `additionalInfo`: Diferent characters of `[a-z ÁÉÍÓÚáéíóú\d.,;:#*^\/]` are removed.
+- `costCenter`: Diferent characters of `[a-zÁÉÍÓÚáéíóú \d_]` are removed.
+
+#### Reference
+- `betweenStreet`: Diferent characters of `[a-zÁÉÍÓÚáéíóú \d_]` are removed.
+- `andStreet`: Diferent characters of `[a-zÁÉÍÓÚáéíóú \d_]` are removed.
+- `shed`: Diferent characters of `[a-zÁÉÍÓÚáéíóú \d_]` are removed.
+- `platform`: Diferent characters of `[a-zÁÉÍÓÚáéíóú \d_]` are removed.
+- `references`: Diferent characters of `[a-zÁÉÍÓÚáéíóú \d_]` are removed.
+
+If you want to disable this sanitization on some models, please set:
+```php
+Reference::disablePrepareData();
+```
+
+Also you could add your own sanitization methods: 
+```php
+Reference::registerPrepareCallbacks([
+    'betweenStreet' => [MyOwnCleaner::class, 'sizeTruncate']
+]);
+```
+See `CleanerTest` for more examples.
 
 Contributing
 ------------
