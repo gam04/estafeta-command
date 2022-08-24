@@ -19,6 +19,7 @@
         "php": ">=8.0",
         "ext-json": "*",
         "myclabs/php-enum": "^1.8",
+        "nette/schema": "^1.2",
         "symfony/browser-kit": "^6.0",
         "symfony/http-client": "^6.0",
         "symfony/mime": "^6.0"

@@ -54,16 +54,6 @@ class Location implements Tokenized
     }
 
     /**
-     * @param array<string, mixed> $properties
-     * @return static self
-     */
-    public static function create(array $properties = []): self
-    {
-        //TODO: Implement
-        throw new \BadMethodCallException('Not implemented yet');
-    }
-
-    /**
      * @return LocationType
      */
     public function getType(): LocationType
